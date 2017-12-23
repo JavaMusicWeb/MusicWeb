@@ -9,35 +9,60 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-    <servlet>
-  <servlet-name>UserServlet</servlet-name>
-  <servlet-class>team.musicweb.servlet.UserServlet</servlet-class>
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>team.musicweb.servlet.UserServlet</servlet-class>
+    <init-param>
+      <description>用户集合</description>
+      <param-name>UserCollection</param-name>
+      <param-value>users</param-value>
+    </init-param>
   </servlet>
-  
-   <servlet>
-  <servlet-name>MusicServlet</servlet-name>
-  <servlet-class>team.musicweb.servlet.MusicServlet</servlet-class>
+  <servlet>
+    <servlet-name>MusicServlet</servlet-name>
+    <servlet-class>team.musicweb.servlet.MusicServlet</servlet-class>
+    <init-param>
+      <description>音乐集合</description>
+      <param-name>MusicCollection</param-name>
+      <param-value>musics</param-value>
+    </init-param>
   </servlet>
-  
-   <servlet>
-  <servlet-name>MusicsheetServlet</servlet-name>
-  <servlet-class>team.musicweb.servlet.MusicsheetServlet</servlet-class>
+  <servlet>
+    <servlet-name>MusicsheetServlet</servlet-name>
+    <servlet-class>team.musicweb.servlet.MusicsheetServlet</servlet-class>
+    <init-param>
+      <description>歌单集合</description>
+      <param-name>MusicsheetCollection</param-name>
+      <param-value>musicsheets</param-value>
+    </init-param>
+    <init-param>
+      <description>瀑布流每页数据量</description>
+      <param-name>PerSize</param-name>
+      <param-value>2</param-value>
+    </init-param>
   </servlet>
-  
   <servlet-mapping>
-  <servlet-name>UserServlet</servlet-name>
-  <url-pattern>/api/user/*</url-pattern>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/api/user/*</url-pattern>
   </servlet-mapping>
-  
-    <servlet-mapping>
-  <servlet-name>MusicServlet</servlet-name>
-  <url-pattern>/api/musicsheet/*</url-pattern>
+  <servlet-mapping>
+    <servlet-name>MusicServlet</servlet-name>
+    <url-pattern>/api/musicsheet/*</url-pattern>
   </servlet-mapping>
-  
-      <servlet-mapping>
-  <servlet-name>MusicServlet</servlet-name>
-  <url-pattern>/api/music/*</url-pattern>
+  <servlet-mapping>
+    <servlet-name>MusicServlet</servlet-name>
+    <url-pattern>/api/music/*</url-pattern>
   </servlet-mapping>
-
-  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/404.html</location>
+  </error-page>
+  <session-config>
+    <session-timeout>900</session-timeout>
+  </session-config>
+  <context-param>
+    <description>数据库名称</description>
+    <param-name>DatabaseName</param-name>
+    <param-value>musicweb</param-value>
+  </context-param>
 </web-app>
