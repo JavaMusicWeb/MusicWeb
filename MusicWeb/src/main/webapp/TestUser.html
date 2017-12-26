@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <title>User Handler Test</title>
@@ -7,11 +7,47 @@
 <body>
 <div>
 <h1>用户注册</h1>
-<form action="/api/user/register" method="post" target="myIframe">
-
+<form action="/MusicWeb/api/user/register" method="post" target="myIframe">
+<input type="text" name="NikeName" placeholder="NikeName"/>
+<input type="text" name="NumberId" placeholder="NumberId"/>
+<input type="text" name="Password" placeholder="Password"/>
+<input type="submit" value="Register">
 </form>
 
 </div>
+
+
+<div>
+<h1>用户登录</h1>
+<form action="/MusicWeb/api/user/login" method="post" target="myIframe">
+<input type="text" name="NumberId" placeholder="NumberId"/>
+<input type="text" name="Password" placeholder="Password"/>
+<input type="text" name="Validate" placeholder="Validate"/>
+    <img id="myImage"  onclick="changeSrc()" src="/MusicWeb/api/user/getValidate"/>
+    <input type="submit" value="Login"/>
+
+</form>
+<script>
+function changeSrc()
+{
+document.getElementById("myImage").src="/MusicWeb/api/user/getValidate?"+Math.ceil(Math.random()*35);
+}
+</script>
+</div>
+
+
+    <div>
+        <h1>用户信息修改</h1>
+        <form action="/MusicWeb/api/user/editInfo" method="post" target="myIframe">
+            <input type="text" name="NikeName" placeholder="NikeName" />
+            <input type="text" name="Password" placeholder="Password" />
+            <input type="text" name="NubmerId" placeholder="NubmerId"/>
+            <input type="submit" value="Editor" />
+
+        </form>
+
+    </div>
+
 
 <iframe name="myIframe"></iframe>
 </body>

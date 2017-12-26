@@ -70,7 +70,7 @@ public class UserServlet extends HttpServlet {
 			response.setContentType("image/jpeg");
 			// 生成随机字串
 			String verifyCode = VerifyCodeUtil.generateVerifyCode(4);
-			System.out.println("validate" + verifyCode);
+			System.out.println("validate:" + verifyCode);
 			// 存入会话session
 			HttpSession session = request.getSession(true);
 			// 删除以前的
@@ -120,6 +120,8 @@ public class UserServlet extends HttpServlet {
 					} else {
 						resJson.put("status", 200);
 						resJson.put("msg", "successful!");
+						//设置seesion
+						session.setAttribute("UserNumber", user.getNumberid());
 						Map<String, String> data = new HashMap<String, String>();
 						data.put("NikeName", user.getNikename());
 						data.put("NumberId", user.getNumberid());
@@ -141,10 +143,11 @@ public class UserServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			resJson.put("status", 500);
 		}
 		finally {
-			response.setContentType("application/json");
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(resJson.toJSONString());
 
 		}

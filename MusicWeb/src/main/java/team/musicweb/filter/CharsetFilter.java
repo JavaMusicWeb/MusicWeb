@@ -39,6 +39,8 @@ public class CharsetFilter implements Filter {
 		chain.doFilter(request, response);
 		
 		//set response charset UTF-8, this method must shoule be done after call doFilter.
+		//maybe call response.setCharacterEncoding don't solve this problem, shoul call
+		// response.setContentType("application/json;charset=UTF-8")
 		response.setCharacterEncoding(encoding);
 //		System.out.println("test filter ecoding:"+response.getCharacterEncoding());
 	}

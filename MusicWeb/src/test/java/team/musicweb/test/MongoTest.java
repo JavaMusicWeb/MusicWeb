@@ -21,6 +21,7 @@ import static com.mongodb.client.model.Filters.*;
 
 import team.musicweb.moudle.Comment;
 import team.musicweb.moudle.Music;
+import team.musicweb.moudle.MusicSheet;
 import team.musicweb.moudle.User;
 import team.musicweb.util.MongoUtil;
 
@@ -35,6 +36,7 @@ public class MongoTest {
 			MongoDatabase mongoDatabase=mongoClient.getDatabase("musicweb");
 			MongoCollection<Document> collection_users=mongoDatabase.getCollection("users");
 			MongoCollection<Document> collection_musics=mongoDatabase.getCollection("musics");
+			MongoCollection<Document> collection_musicsheets=mongoDatabase.getCollection("musicsheets");
 			Document document=new Document();
 			
 			User user=new User();
@@ -48,9 +50,16 @@ public class MongoTest {
 			music.setSonger("dazhuang");
 			music.setMd5Value("456a4df4sf56s4df6s");
 			
-			collection_users.find(eq("musicsheets", "dsfdsfsdfdsfdsfdsfs")).forEach(printBlock);;
+//			User user2=MongoUtil.findOne(collection_users, eq("_id", "ea73fafc678d42e18eeca5ae1e5dc481"),new  TypeReference<User>() {});
+//			user2.getMusicsheets().remove("33a9bc169bcc43c9b4fe613f0775ab6b");
+//			MongoUtil.update(collection_users, user2);
+			
+			//collection_users.find(eq("musicsheets", "dsfdsfsdfdsfdsfdsfs")).forEach(printBlock);;
 			
 			
+//	MusicSheet mSheet=		MongoUtil.findOne(collection_musicsheets, eq("_id","438530e833524a69b601cf430520c454"), new TypeReference<MusicSheet>() {});
+//			
+//			System.out.println(mSheet);
 //添加对象			
 //			document.putAll(MongoUtil.Obj2Map(user));
 //			collection.insertOne(document);

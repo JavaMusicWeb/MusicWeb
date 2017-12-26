@@ -67,7 +67,7 @@ public class MusicServlet extends HttpServlet {
 			resJosn.put("status", 500);
 		}
 		finally {
-			response.setContentType("application/json");
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(resJosn.toString());
 		}
 		
@@ -90,7 +90,7 @@ public class MusicServlet extends HttpServlet {
 		} catch (Exception e) {
 			resJosn.put("status", 500);
 		} finally {
-			response.setContentType("application/json");
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(resJosn.toString());
 		}
 	}

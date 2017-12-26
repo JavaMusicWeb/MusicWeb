@@ -142,8 +142,6 @@ public class MusicService {
 							musicName=value;
 						case "MusicSinger":
 							musicSinger=value;
-							default:
-								return false;
 					}
 		    } else {
 		    	//如果是文件字段
@@ -157,10 +155,13 @@ public class MusicService {
 					in = item.getInputStream();
 					musicMd5=DigestUtils.md5Hex(IOUtils.toByteArray(in));
 	    			ServletContext sct=request.getServletContext();
-	    			String serverSavaPath=sct.getInitParameter("MusicFilePath").toString();
+	    			String serverSavaPath=request.getServletContext().getRealPath("/")+sct.getInitParameter("MusicFilePath").toString();
 	    			out=new FileOutputStream(new File(serverSavaPath,musicMd5+".mp3"));
 	    			int length=0;
 	    			byte[] buf=new byte[1024];
+	    			in.close();
+	    			//重新获取流，因为 hash操作，将流指针移到最后
+	    			in = item.getInputStream();
 	    			while((length=in.read(buf))!=-1) {
 	    				out.write(buf, 0, length);
 	    			}

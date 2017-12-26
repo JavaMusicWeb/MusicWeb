@@ -66,6 +66,12 @@ public class MusicSheet implements BaseModle {
 	public String getCreateTime() {
 		return createTime;
 	}
+
+	@Override
+	public String toString() {
+		return "MusicSheet [_id=" + _id + ", name=" + name + ", picUrl=" + picUrl + ", createTime=" + createTime
+				+ ", musics=" + musics + ", comments=" + comments + "]";
+	}
 	
 	
 	

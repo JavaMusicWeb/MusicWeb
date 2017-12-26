@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Musicsheet Handler Test</title>
+</head>
+<body>
+    <div>
+        <h1>创建歌单</h1>
+        <form action="/MusicWeb/api/musicsheet/create" method="post" enctype="multipart/form-data" target="myIframe">
+            <input type="text" name="NumberId" placeholder="NumberId" />
+            <input type="text" name="SheetName" placeholder="SheetName" />
+            <input type="file" name="SheetPic" />
+            <input type="submit" value="Create">
+        </form>
+    </div>
+
+    <div>
+        <h1>删除歌单</h1>
+        <form action="/MusicWeb/api/musicsheet/delete" method="get" target="myIframe">
+            <input type="text" name="id" placeholder="id" />
+            <input type="submit" value="Delete">
+        </form>
+    </div>
+
+    <div>
+        <h1>获取所有歌单</h1>
+        <form action="/MusicWeb/api/musicsheet/getAll" method="get" target="myIframe">
+            <input type="text" name="current" placeholder="current" />
+            <input type="submit" value="GetAllSheet">
+        </form>
+    </div>
+
+    <div>
+        <h1>获取用户歌单概况</h1>
+        <form action="/MusicWeb/api/musicsheet/getInfo" method="get" target="myIframe">
+            <input type="text" name="userid" placeholder="userid" />
+            <input type="submit" value="GetUserSheet">
+        </form>
+    </div>
+
+    <div>
+        <h1>获取歌单歌曲</h1>
+        <form action="/MusicWeb/api/musicsheet/getSongs" method="get" target="myIframe">
+            <input type="text" name="musicsheetId" placeholder="musicsheetId" />
+            <input type="submit" value="GetMusics">
+        </form>
+    </div>
+
+    <div>
+        <h1>评论歌单</h1>
+        <form action="/MusicWeb/api/musicsheet/publishComment" method="post" target="myIframe">
+            <input type="text" name="NumberId" placeholder="NumberId" />
+            <input type="text" name="MusicsheetId" placeholder="MusicsheetId" />
+            <input type="text" name="Content" placeholder="Content" />
+            <input type="submit" value="Publish">
+        </form>
+    </div>
+
+    <div>
+        <h1>获取评论</h1>
+        <form action="/MusicWeb/api/musicsheet/getComments?=456" method="get" target="myIframe">
+            <input type="text" name="MusicSheetId" placeholder="MusicSheetId" />
+            <input type="submit" value="GetComments">
+        </form>
+    </div>
+
+    <div>
+        <h1>删除评论</h1>
+        <form action="/MusicWeb/api/musicsheet/removeComment" method="get" target="myIframe">
+            <input type="text" name="id" placeholder="id" />
+            <input type="submit" value="DeleteComment">
+        </form>
+    </div>
+
+
+    <iframe name="myIframe"></iframe>
+</body>
+</html>

@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * Servlet Filter implementation class PowerCheckFilter
  */
-@WebFilter("/PowerCheckFilter")
+//@WebFilter("/PowerCheckFilter")
 public class PowerCheckFilter implements Filter {
 
     /**

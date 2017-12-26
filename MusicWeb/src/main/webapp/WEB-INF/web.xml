@@ -69,7 +69,7 @@
 		<url-pattern>/api/user/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>MusicServlet</servlet-name>
+		<servlet-name>MusicsheetServlet</servlet-name>
 		<url-pattern>/api/musicsheet/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -92,13 +92,13 @@
 	<context-param>
 		<description>Music File Path on Server</description>
 		<param-name>MusicFilePath</param-name>
-		<param-value>/home/sky/upload/musics/</param-value>
+		<param-value>/upload/musics/</param-value>
 	</context-param>
 
 	<context-param>
 		<description>Picture File Path on Server</description>
 		<param-name>PictureFilePath</param-name>
-		<param-value>/home/sky/upload/pictures/</param-value>
+		<param-value>/upload/pictures/</param-value>
 	</context-param>
 
 	<filter>
@@ -126,7 +126,7 @@
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
-	<filter-mapping>
+ 	<filter-mapping>
 		<filter-name>PowerCheckFilter</filter-name>
 		<servlet-name>MusicServlet</servlet-name>
 		<url-pattern>/api/user/editInfo</url-pattern>
@@ -135,6 +135,6 @@
 		<url-pattern>/api/musicsheet/create</url-pattern>
 		<url-pattern>/api/musicsheet/getInfo</url-pattern>
 		<url-pattern>/api/musicsheet/removeComment</url-pattern>
-	</filter-mapping>
+	</filter-mapping> 
 
 </web-app>

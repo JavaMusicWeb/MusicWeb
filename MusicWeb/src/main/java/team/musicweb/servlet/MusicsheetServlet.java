@@ -39,6 +39,7 @@ public class MusicsheetServlet extends HttpServlet {
 				mongoData.getCollection(config.getInitParameter("UserCollection")),
 				mongoData.getCollection(config.getInitParameter("MusicCollection")),
 				mongoData.getCollection(config.getInitParameter("CommentCollection")));
+		
 	}
 
 	/**
@@ -64,19 +65,23 @@ public class MusicsheetServlet extends HttpServlet {
 				resJson.put("total", musicsheetService.getMusicsheetCount());
 				resJson.put("data", musicsheetService.getAllMusicsheets(request, perSize));
 			}else if(requesUrl.contains("delete")) {
-				resJson.put("status", musicsheetService.removeComment(request)?200:2004);
+				resJson.put("status", musicsheetService.delete(request)?200:2004);
 			}else if(requesUrl.contains("removeComment")) {
 				resJson.put("status", musicsheetService.removeComment(request)?200:-1);
 			}else if(requesUrl.contains("getComments")) {
 				resJson.put("status", 200);
 				resJson.put("data", musicsheetService.getComments(request));
+			}else if(requesUrl.contains("getInfo")) {
+				resJson.put("status", 200);
+				resJson.put("data",musicsheetService.getMusicsheetsByUserid(request));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			resJson.put("status", 500);
 		}
 		finally {
-			response.setContentType("application/json");
-			response.getWriter().append(resJson.toString());
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(resJson.toJSONString());
 		}
 	}
 
@@ -91,15 +96,12 @@ public class MusicsheetServlet extends HttpServlet {
 				resJson.put("status", musicsheetService.publishComment(request)?200:-1);
 			}else if(requesUrl.contains("create")) {
 				resJson.put("status", musicsheetService.create(request)?200:-1);
-			}else if(requesUrl.contains("getInfo")) {
-				resJson.put("status", 200);
-				resJson.put("data",musicsheetService.getMusicsheetsByUserid(request));
 			}
 		} catch (Exception e) {
 			resJson.put("status", 500);
 		}
 		finally {
-			response.setContentType("application/json");
+			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(resJson.toString());
 		}
 	}

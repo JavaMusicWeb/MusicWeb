@@ -75,14 +75,14 @@ public class UserService {
 	public User updateInfo(HttpServletRequest request) {
 		String userNum = request.getParameter("NubmerId");
 		String userNike = request.getParameter("NikeName");
-		String userPwd = request.getParameter("Password	");
+		String userPwd = request.getParameter("Password");
 		User user = MongoUtil.findOne(collection, eq("numberid", userNum), new TypeReference<User>() {});
 		if(user!=null) {
 			user.setNikename(userNike);
 			user.setPassword(String.valueOf(userPwd.hashCode()));
-			return user;
+			if(MongoUtil.update(collection, user))
+				return user;
 		}
-		else
 			return null;
 		
 	}

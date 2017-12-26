@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.FileItem;
@@ -59,6 +58,8 @@ public class MusicsheetService {
 	 * @return
 	 */
 	public boolean create(HttpServletRequest request) {
+		
+
 		// querystring should do url decode!
 		// request 中 url qurystirng should do url decode.
 		// referance:http://blog.csdn.net/lian_zhihui1984/article/details/6822201
@@ -87,7 +88,9 @@ public class MusicsheetService {
 		String sheetName = "";
 		String picUrl = "";
 		Iterator<?> iter = items.iterator();
+
 		while (iter.hasNext()) {
+			
 			FileItem item = (FileItem) iter.next();
 
 			if (item.isFormField()) {
@@ -105,30 +108,33 @@ public class MusicsheetService {
 					break;
 				case "SheetName":
 					sheetName = value;
-				default:
-					return false;
 				}
 			} else {
 				// 如果是文件字段
 				// String fieldName = item.getFieldName();
 				String value = item.getName();// 会将完整路径名传过来
 				String suffix = value.substring(value.lastIndexOf(".") + 1);
+				
 				OutputStream out = null;
 				InputStream in = null;
 				try {
 					in = item.getInputStream();
 					picMd5 = DigestUtils.md5Hex(IOUtils.toByteArray(in));
 					ServletContext sct = request.getServletContext();
-					String serverSavaPath = sct.getInitParameter("PictureFilePath").toString();
+					String serverSavaPath = request.getServletContext().getRealPath("/")+sct.getInitParameter("PictureFilePath").toString();
 					picUrl = picMd5 + "." + suffix;
 					out = new FileOutputStream(new File(serverSavaPath, picUrl));
 					int length = 0;
 					byte[] buf = new byte[1024];
+					in.close();
+					//这里必须重复获取 输入流，因为上面的hash操作会将输入流指针移到末尾
+					in=item.getInputStream();
 					while ((length = in.read(buf)) != -1) {
 						out.write(buf, 0, length);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+					return false;
 				} finally {
 					// close stream
 					try {
@@ -143,6 +149,8 @@ public class MusicsheetService {
 
 			}
 		}
+
+		
 
 		// 创建歌单
 		MusicSheet musicSheet = new MusicSheet();
@@ -169,13 +177,18 @@ public class MusicsheetService {
 	 */
 	public boolean delete(HttpServletRequest request) {
 		String musicsheetId = request.getParameter("id");
-		MusicSheet musicSheet = MongoUtil.findOne(collection_user, eq("numberid", musicsheetId),
+		MusicSheet musicSheet = MongoUtil.findOne(collection_musicsheet, eq("_id", musicsheetId),
 				new TypeReference<MusicSheet>() {
 				});
 		if (musicSheet == null)
 			return false;
-		else
-			return MongoUtil.delete(collection_musicsheet, musicSheet);
+		else {
+			User user=MongoUtil.findOne(collection_user, eq("musicsheets",musicsheetId),new TypeReference<User>() {});
+			user.getMusicsheets().remove(musicsheetId);
+			MongoUtil.delete(collection_musicsheet, musicSheet);
+			return  MongoUtil.update(collection_user, user);
+		}
+		
 	}
 
 	/**
@@ -205,12 +218,16 @@ public class MusicsheetService {
 		if (currtenPage < 0)
 			return ansls;
 		MusicSheet ms = null;
-		MusicSheetPack msp = new MusicSheetPack();
+		MusicSheetPack msp = null;
+		int cnt=0;
 		FindIterable<Document> col = collection_musicsheet.find().skip(currtenPage * perSize);
 		try {
 			for (Document doc : col) {
+				if(++cnt>perSize)
+					break;
 				ms = JSON.parseObject(doc.toJson(), new TypeReference<MusicSheet>() {
 				});
+				msp=new MusicSheetPack();
 				msp.setId(ms.get_id());
 				msp.setName(ms.getName());
 				msp.setPictureUrl(ms.getPicUrl());
@@ -241,8 +258,12 @@ public class MusicsheetService {
 			MusicSheetPack msp = null;
 			List<String> msids = user.getMusicsheets();
 			for (String string : msids) {
-				ms = MongoUtil.findOne(collection_musicsheet, eq("_id", string), new TypeReference<MusicSheet>() {
-				});
+//				ms = MongoUtil.findOne(collection_musicsheet, eq("_id", string), new TypeReference<MusicSheet>() {
+//				});
+				ms = MongoUtil.findOne(collection_musicsheet, eq("_id", string),
+						new TypeReference<MusicSheet>() {
+						});
+				
 				msp = new MusicSheetPack();
 				msp.setId(ms.get_id());
 				msp.setName(ms.getName());
@@ -263,7 +284,7 @@ public class MusicsheetService {
 	 */
 	public List<Music> getMusics(HttpServletRequest request) {
 		List<Music> anList = new LinkedList<Music>();
-		String msid = request.getParameter("id");
+		String msid = request.getParameter("musicsheetId");
 		MusicSheet ms = MongoUtil.findOne(collection_musicsheet, eq("_id", msid), new TypeReference<MusicSheet>() {
 		});
 		if (ms != null) {
@@ -283,15 +304,15 @@ public class MusicsheetService {
 	 * @return
 	 */
 	public boolean publishComment(HttpServletRequest request) {
-		String userNum = "";
-		try {
-			HttpSession session = request.getSession(false);
-			userNum = session.getAttribute("UserNumber").toString();
-		} catch (Exception e) {
-			return false;
-		}
+		String userNum = request.getParameter("NumberId");
+//		try {
+//			HttpSession session = request.getSession(false);
+//			userNum = session.getAttribute("UserNumber").toString();
+//		} catch (Exception e) {
+//			return false;
+//		}
 		String msId = request.getParameter("MusicsheetId");
-		String context = request.getParameter("MusicsheetId");
+		String context = request.getParameter("Content");
 
 		// 创建一条评论
 		Comment comment = new Comment();
@@ -356,9 +377,9 @@ public class MusicsheetService {
 		if (comment != null) {
 			 MongoUtil.delete(collection_comment, comment);
 			//删除歌单里面记录评论的列表
-			 MusicSheet ms=MongoUtil.findOne(collection_musicsheet, eq("comments", comment.get_id()), new TypeReference<MusicSheet>() {});
-			 ms.getComments().remove(comment.get_id());
-			 return MongoUtil.update(collection_comment, ms);
+			 MusicSheet ms=MongoUtil.findOne(collection_musicsheet, eq("comments", commentId), new TypeReference<MusicSheet>() {});
+			 ms.getComments().remove(commentId);
+			 return MongoUtil.update(collection_musicsheet, ms);
 		}
 		else
 			return false;
@@ -457,6 +478,12 @@ public class MusicsheetService {
 
 		public void setTotalSongs(String totalSongs) {
 			this.totalSongs = totalSongs;
+		}
+
+		@Override
+		public String toString() {
+			return "MusicSheetPack [id=" + id + ", name=" + name + ", pictureUrl=" + pictureUrl + ", createTime="
+					+ createTime + ", totalSongs=" + totalSongs + "]";
 		}
 	}
 }
