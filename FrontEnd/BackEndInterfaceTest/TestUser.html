@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Handler Test</title>
+</head>
+<body>
+<div>
+<h1>用户注册</h1>
+<form action="/api/user/register" method="post" target="myIframe">
+<input type="text" name="NikeName" placeholder="NikeName"/>
+<input type="text" name="NumberId" placeholder="NumberId"/>
+<input type="text" name="Password" placeholder="Password"/>
+<input type="submit" value="Register">
+</form>
+
+</div>
+
+
+<div>
+<h1>用户登录</h1>
+<form action="/api/user/login" method="post" target="myIframe">
+<input type="text" name="NumberId" placeholder="NumberId"/>
+<input type="text" name="Password" placeholder="Password"/>
+<input type="text" name="Validate" placeholder="Validate"/>
+    <img src="/api/user/getValidate"/>
+    <input type="submit" value="Login"/>
+
+</form>
+
+</div>
+
+
+    <div>
+        <h1>用户信息修改</h1>
+        <form action="/api/user/editInfo" method="post" target="myIframe">
+            <input type="text" name="NikeName" placeholder="NikeName" />
+            <input type="text" name="Password" placeholder="Password" />
+            <input type="text" name="NubmerId" placeholder="NubmerId"/>
+            <input type="submit" value="Editor" />
+
+        </form>
+
+    </div>
+
+
+<iframe name="myIframe"></iframe>
+</body>
+</html>

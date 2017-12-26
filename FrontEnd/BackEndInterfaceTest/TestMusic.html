@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Music Handler Test</title>
+</head>
+<body>
+
+    <div>
+        <h1>上传歌曲</h1>
+        <form action="/api/music/upload" method="post" enctype="multipart/form-data" target="myIframe">
+            <input type="text" name="MusicSheetId" placeholder="MusicSheetId" />
+            <input type="text" name="MusicName" placeholder="MusicName" />
+            <input type="text" name="MusicSinger" placeholder="MusicSinger" />
+            <input type="file" name="MusicContent" />
+            <input type="submit" value="Upload">
+        </form>
+
+    </div>
+
+    <div>
+        <h1>移除歌曲</h1>
+        <form action="/api/music/remove" method="get" target="myIframe">
+            <input type="text" name="MusicsheetId" placeholder="MusicsheetId" />
+            <input type="text" name="MusicId" placeholder="MusicId" />
+            <input type="submit" value="Remove">
+        </form>
+
+    </div>
+
+    <div>
+        <h1>歌曲迁移</h1>
+        <form action="/api/music/transmusic" method="post" target="myIframe">
+            <input type="text" name="Md5" placeholder="Md5" />
+            <input type="text" name="MusicSheetId" placeholder="MusicSheetId" />
+            <input type="submit" value="Trans">
+        </form>
+
+    </div>
+
+    <div>
+        <h1>极速秒传</h1>
+        <form action="/api/music/thunder" method="get" target="myIframe">
+            <input type="text" name="md5" placeholder="md5" />
+            <input type="submit" value="Judge">
+        </form>
+
+    </div>
+
+
+    <iframe name="myIframe"></iframe>
+</body>
+</html>
