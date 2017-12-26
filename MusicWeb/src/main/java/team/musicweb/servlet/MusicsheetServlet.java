@@ -35,7 +35,10 @@ public class MusicsheetServlet extends HttpServlet {
 		super.init(config);
 		mongoClient = new MongoClient();
 		mongoData = mongoClient.getDatabase(this.getServletContext().getInitParameter("DatabaseName"));
-		musicsheetService = new MusicsheetService(mongoData.getCollection(config.getInitParameter("MusicsheetCollection")));
+		musicsheetService = new MusicsheetService(mongoData.getCollection(config.getInitParameter("MusicsheetCollection")),
+				mongoData.getCollection(config.getInitParameter("UserCollection")),
+				mongoData.getCollection(config.getInitParameter("MusicCollection")),
+				mongoData.getCollection(config.getInitParameter("CommentCollection")));
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class MusicsheetServlet extends HttpServlet {
 				resJson.put("data", musicsheetService.getMusics(request));
 			}else if(requesUrl.contains("getAll")) {
 				resJson.put("status", 200);
-				String perSize=this.getServletConfig().getInitParameter("PerSize");
+				int perSize=Integer.parseInt(this.getServletConfig().getInitParameter("PerSize"));
 				resJson.put("total", musicsheetService.getMusicsheetCount());
 				resJson.put("data", musicsheetService.getAllMusicsheets(request, perSize));
 			}else if(requesUrl.contains("delete")) {
@@ -84,7 +87,7 @@ public class MusicsheetServlet extends HttpServlet {
 		String requesUrl=request.getRequestURI().toString();
 		JSONObject resJson=new JSONObject();
 		try {
-			if(requesUrl.contains("publish")) {
+			if(requesUrl.contains("publishComment")) {
 				resJson.put("status", musicsheetService.publishComment(request)?200:-1);
 			}else if(requesUrl.contains("create")) {
 				resJson.put("status", musicsheetService.create(request)?200:-1);

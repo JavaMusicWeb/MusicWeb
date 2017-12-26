@@ -1,6 +1,8 @@
 package team.musicweb.moudle;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,12 +11,15 @@ public class MusicSheet implements BaseModle {
 	private String _id;
 	private String name;
 	private String picUrl;
+	private String createTime;
 	private List<String> musics;
 	private List<String> comments;
 	public MusicSheet() {
 		_id=UUID.randomUUID().toString().replaceAll("-", "");
 		musics=new ArrayList<String>();
 		setComments(new ArrayList<String>());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+		createTime=df.format(new Date()).replace('-', '.');
 	}
 
 	@Override
@@ -56,6 +61,10 @@ public class MusicSheet implements BaseModle {
 
 	public void setComments(List<String> comments) {
 		this.comments = comments;
+	}
+
+	public String getCreateTime() {
+		return createTime;
 	}
 	
 	

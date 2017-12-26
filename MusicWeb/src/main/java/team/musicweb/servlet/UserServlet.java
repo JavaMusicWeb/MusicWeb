@@ -98,8 +98,12 @@ public class UserServlet extends HttpServlet {
 				resJson.put("status", status);
 				if (status == 200)
 					resJson.put("msg", "successful!");
-				else
+				else if(status==2001)
 					resJson.put("msg", "NumberId has registered!");
+				else if(status==20010)
+					resJson.put("msg", "Input error!");
+				else 
+					resJson.put("msg", "Server error!");
 			} else if (requestUrl.contains("login")) {
 				// 验证验证码
 				HttpSession session = request.getSession();

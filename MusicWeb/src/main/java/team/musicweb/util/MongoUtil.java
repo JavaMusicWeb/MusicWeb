@@ -60,10 +60,11 @@ public class MongoUtil {
 	 * @param obj，插入对象
 	 */
 	public static boolean insert(MongoCollection<Document> collection, Object obj) {
-		if(obj == null)
+		if (obj == null)
 			return false;
 		Document document = new Document();
 		document.putAll(MongoUtil.Obj2Map(obj));
+		System.out.println(document.toJson());
 		collection.insertOne(document);
 		return true;
 	}
@@ -77,7 +78,10 @@ public class MongoUtil {
 	 */
 	public static <T> T findOne(MongoCollection<Document> collection, Bson filter, TypeReference<T> type) {
 		Document document = collection.find(filter).first();
-		return (T) JSON.parseObject(document.toJson(), type);
+		if (document != null)
+			return (T) JSON.parseObject(document.toJson(), type);
+		else
+			return null;
 	}
 
 	public static <T> List<T> findMany(MongoCollection<Document> collection, Bson filter, TypeReference<T> type) {
@@ -95,14 +99,16 @@ public class MongoUtil {
 	 * @param t
 	 */
 	public static <T> boolean update(MongoCollection<Document> collection, T t) {
-		if(t== null) return false;
+		if (t == null)
+			return false;
 		Document document = new Document();
 		document.append("$set", MongoUtil.Obj2Map(t));
 		Class<?> clazz = t.getClass();
 		Method getId;
 		try {
 			getId = clazz.getDeclaredMethod("get_id");
-			return collection.updateOne(eq("_id", getId.invoke(t).toString()), document).getMatchedCount()>0?true:false;
+			return collection.updateOne(eq("_id", getId.invoke(t).toString()), document).getMatchedCount() > 0 ? true
+					: false;
 		} catch (NoSuchMethodException e1) {
 			e1.printStackTrace();
 		} catch (SecurityException e1) {
@@ -123,11 +129,10 @@ public class MongoUtil {
 	 * @param collection
 	 * @param T
 	 */
-	public static <T> boolean delete(MongoCollection<Document> collection, BaseModle t) {
+	public static boolean delete(MongoCollection<Document> collection, BaseModle t) {
 		if (t == null)
 			return false;
-		
-		return collection.deleteOne(eq("_id", t.get_id())).getDeletedCount()>0?true:false;
+		return collection.deleteOne(eq("_id", t.get_id())).getDeletedCount() > 0 ? true : false;
 	}
 
 }

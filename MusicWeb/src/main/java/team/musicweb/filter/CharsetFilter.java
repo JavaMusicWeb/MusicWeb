@@ -7,13 +7,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
 /**
  * Servlet Filter implementation class CharsetFilter
  */
-@WebFilter("/CharsetFilter")
+//@WebFilter("/CharsetFilter")
 public class CharsetFilter implements Filter {
+	private String encoding;
 
     /**
      * Default constructor. 
@@ -33,19 +33,21 @@ public class CharsetFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
+		
+		//set request charset UTF-8, this method must should be done before call doFilter.
+		request.setCharacterEncoding(encoding);
 		chain.doFilter(request, response);
+		
+		//set response charset UTF-8, this method must shoule be done after call doFilter.
+		response.setCharacterEncoding(encoding);
+//		System.out.println("test filter ecoding:"+response.getCharacterEncoding());
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		
+		encoding=fConfig.getInitParameter("Encoding");
 		
 	}
 

@@ -49,6 +49,12 @@ public class Comment implements BaseModle {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment [_id=" + _id + ", userId=" + userId + ", musicshetId=" + musicshetId + ", publishDate="
+				+ publishDate + ", content=" + content + "]";
+	}
 	
 
 }

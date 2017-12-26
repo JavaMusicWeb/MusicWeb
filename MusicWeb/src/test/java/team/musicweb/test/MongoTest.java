@@ -10,7 +10,6 @@ import javax.print.Doc;
 
 import org.apache.taglibs.standard.lang.jstl.EqualityOperator;
 import org.bson.Document;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.mongodb.Block;
@@ -20,6 +19,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.*;
 
+import team.musicweb.moudle.Comment;
 import team.musicweb.moudle.Music;
 import team.musicweb.moudle.User;
 import team.musicweb.util.MongoUtil;
@@ -47,6 +47,8 @@ public class MongoTest {
 			music.setName("我们不一样");
 			music.setSonger("dazhuang");
 			music.setMd5Value("456a4df4sf56s4df6s");
+			
+			collection_users.find(eq("musicsheets", "dsfdsfsdfdsfdsfdsfs")).forEach(printBlock);;
 			
 			
 //添加对象			
@@ -78,7 +80,8 @@ public class MongoTest {
 //			User user2=JSON.parseObject(document2.toJson(),new TypeReference<User>() {});
 //			System.out.println(user2);
 //			System.out.println(MongoUtil.findOne(collection, eq("_id", "37663933768e47f1b8228ca8391400d7")).toString());
-//			System.out.println(MongoUtil.findOne(collection_musics, eq("_id","2f6068c592414589a63975577990c6e7"),new TypeReference<Music>() {} ).toString());
+//			Object object=MongoUtil.findOne(collection_musics, eq("_id","2f6068c592414589a63975577990c6e7"),new TypeReference<Music>() {} );
+//			System.out.println(object==null?"yesy":object.toString());
 			
 			
 //删除对象

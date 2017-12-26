@@ -38,8 +38,7 @@ public class MusicServlet extends HttpServlet {
 		super.init(config);
 		mongoClient = new MongoClient();
 		mongoData = mongoClient.getDatabase(this.getServletContext().getInitParameter("DatabaseName"));
-		musicService = new MusicService(mongoData.getCollection(config.getInitParameter("MusicCollection")));
-
+		musicService = new MusicService(mongoData.getCollection(config.getInitParameter("MusicCollection")),mongoData.getCollection(config.getInitParameter("MusicsheetCollection")));
 	}
 
 	/**
