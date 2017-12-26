@@ -5,8 +5,8 @@
 
 ------
 如何配置：
-1. 安装 Tomcat
-2. 安装 Mongodb 环境
+1. 安装 Tomcat (V9)
+2. 安装 Mongodb 环境(V2.6.10)
 3. 将 war包放在 Tomcat webapps 里面
 4. 重启 Tomcat 即可
 
