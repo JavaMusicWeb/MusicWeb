@@ -14,4 +14,4 @@
 
 - 2018年 01月 01日 星期一 07:46:27 CST
 > picture Url: http://localhost:8080/MusicWeb/upload/pictures/ef6e8ea1ec6b8fc5ca7afbfb1c07b27f.jpg
-> http://localhost:8080/MusicWeb/upload/musics/b735cc62f566c6ac13d35e580c508aa3.mp3
+> music Url: http://localhost:8080/MusicWeb/upload/musics/b735cc62f566c6ac13d35e580c508aa3.mp3
