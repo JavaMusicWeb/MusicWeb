@@ -10,3 +10,8 @@
 - 2017年 12月 27日 星期三 00:20:15 CST
 > finish all back-end , and test all interfaces.
 > update the project README.md and Interface instruction
+
+
+- 2018年 01月 01日 星期一 07:46:27 CST
+> picture Url: http://localhost:8080/MusicWeb/upload/pictures/ef6e8ea1ec6b8fc5ca7afbfb1c07b27f.jpg
+> http://localhost:8080/MusicWeb/upload/musics/b735cc62f566c6ac13d35e580c508aa3.mp3
