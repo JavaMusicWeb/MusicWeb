@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="app" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" class="app">
 <head>  
   <meta charset="utf-8" />
   <title>Musik | Web Application</title>
@@ -33,12 +33,16 @@
           <div class="form-group">
              <input id="password" type="password" placeholder="Password" class="form-control rounded input-lg text-center no-border">
           </div>
-          <div class="form-group">
+          <!--<div class="form-group">
               <img id="imgId" onclick="changeSrc()" src="/MusicWeb/api/user/getValidate">
-          </div>
+          </div>-->
           <div class="form-group">
-             <input id="validate" type="text" placeholder="Validate" class="form-control rounded input-lg text-center no-border">
-          </div>
+             <input id="validate" type="text" placeholder="Validate" class="form-control rounded input-lg text-center no-border" style="width:  200px;display: inline-block;margin-right:  20px;">
+	     <img id="imgId" onclick="changeSrc()" src="/MusicWeb/api/user/getValidate" style="
+    display:  inline-block;
+    margin-top: -11px;
+">
+	  </div>
 
           <div id="login" type="submit" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"><i class="icon-arrow-right pull-right"></i><span class="m-r-n-lg">Sign in</span></div>
           <div class="line line-dashed"></div>

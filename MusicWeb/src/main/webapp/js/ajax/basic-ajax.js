@@ -19,6 +19,10 @@ function basic(){
         data: {},
         async: true,
         success: function(datas) {
+			if(datas.status==403){
+				$.cookie("userid", "", { expires: 7, path: '/' });
+				$.cookie("nickname", "", { expires: 7, path: '/' });
+			}
             localMusicLists += "<li class='hidden-nav-xs padder m-t m-b-sm text-xs text-muted'>" +
                 "<span class='pull-right'><a onclick='createList()' href='javascript:void(0);'><i class='icon-plus i-lg'></i></a></span>" +
                 "Playlist" +
@@ -43,6 +47,7 @@ function basic(){
                 }
             }
         $("#localMusicLists").html(localMusicLists);
+
         }
     });
 	nickname = $.cookie('nickname');
