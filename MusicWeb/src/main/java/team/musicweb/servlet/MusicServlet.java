@@ -60,7 +60,7 @@ public class MusicServlet extends HttpServlet {
 			if (requestUrl.contains("thunder")) {
 				resJosn.put("status", (musicService.hasMusic(request.getParameter("md5")) ? 1 : -1));
 			} else if (requestUrl.contains("remove")) {
-				resJosn.put("status", (musicService.remove(request) ? 1 : -1));
+				resJosn.put("status", (musicService.remove(request) ? 200 : -1));
 			}
 
 		} catch (Exception e) {
@@ -83,9 +83,9 @@ public class MusicServlet extends HttpServlet {
 		JSONObject resJosn = new JSONObject();
 		try {
 			if (requestUrl.contains("transmusic")) {
-				resJosn.put("status", (musicService.transmusic(request) ? 1 : -1));
+				resJosn.put("status", (musicService.transmusic(request) ? 200 : -1));
 			} else if (requestUrl.contains("upload")) {
-				resJosn.put("status", (musicService.upload(request) ? 1 : -1));
+				resJosn.put("status", (musicService.upload(request) ? 200: -1));
 			}
 		} catch (Exception e) {
 			resJosn.put("status", 500);

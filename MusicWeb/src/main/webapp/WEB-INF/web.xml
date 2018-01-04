@@ -61,7 +61,7 @@
 		<init-param>
 			<description>瀑布流每页数据量</description>
 			<param-name>PerSize</param-name>
-			<param-value>2</param-value>
+			<param-value>12</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
